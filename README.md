@@ -19,6 +19,6 @@ dotnet user-secrets set "VkApi:SecretKey" "{SecretKey}"
 (личной стены вк) и переадрессовать код доступа на нужный url. 
 Для этого необходимо отправить подобный get-запрос:
 
-``https://oauth.vk.com/authorize?client_id=8208494&display=page&redirect_uri=https://localhost:7005/VkPosts/GetNumberOccurrencesLetters&scope=walls&response_type=code&v=5.131``
+``https://oauth.vk.com/authorize?client_id={AppId}&display=page&redirect_uri=https://localhost:7005/VkPosts/GetNumberOccurrencesLetters&scope=walls&response_type=code&v=5.131``
 
 В случае успеха результат работы будет представлен в формате json.

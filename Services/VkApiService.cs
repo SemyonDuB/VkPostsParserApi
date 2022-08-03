@@ -6,8 +6,8 @@ public interface IVkApiService
 {
 	public int UserId { get; }
 	public Wall Wall { get; }
-	
-	public Task UpdateToken(string code, string redirectUri);
+
+	public Task UpdateToken(string code);
 }
 
 public class VkApiService : IVkApiService
@@ -18,22 +18,24 @@ public class VkApiService : IVkApiService
 	private string token = "";
 	private readonly string version;
 
-	public int UserId { get; private set; } = 0;
-	public Wall Wall => new Wall(httpClientFactory.CreateClient(), token, version);
+	public int UserId { get; private set; }
+	public Wall Wall => new(httpClientFactory.CreateClient(), token, version);
 
 	public VkApiService(IConfiguration config, IHttpClientFactory httpClientFactory)
 	{
 		this.config = config;
 		this.httpClientFactory = httpClientFactory;
-		
+
 		version = this.config["VkApi:Version"];
 	}
 
-	public async Task UpdateToken(string code, string redirectUri)
+	public async Task UpdateToken(string code)
 	{
 		const string oauth = "https://oauth.vk.com/access_token";
 		var appId = config["VkApi:AppId"];
 		var secretKey = config["VkApi:SecretKey"];
+		var redirectUri = config["redirectUri"];
+
 		var url = $"{oauth}?client_id={appId}&client_secret={secretKey}&redirect_uri={redirectUri}&code={code}";
 
 		var httpRequestMsg = new HttpRequestMessage(HttpMethod.Get, url);

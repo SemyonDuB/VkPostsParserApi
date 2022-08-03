@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using VkServer.Models;
@@ -26,10 +25,7 @@ public class VkPostsController : ControllerBase
 	[Produces("application/json")]
 	public async Task<IActionResult> Get(string code)
 	{
-		var uri = new Uri(HttpContext.Request.GetDisplayUrl());
-		var redirectUrl = uri.GetLeftPart(UriPartial.Path);
-
-		await vkApiService.UpdateToken(code, redirectUrl);
+		await vkApiService.UpdateToken(code);
 
 		var hash = new StringBuilder();
 		var texts = new List<string>();

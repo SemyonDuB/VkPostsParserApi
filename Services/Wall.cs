@@ -13,7 +13,7 @@ public class Post
 
 public class Wall
 {
-	public static readonly string Url = "https://api.vk.com/method/wall";
+	private const string ApiUri = "https://api.vk.com/method/wall";
 
 	private readonly HttpClient httpClient;
 	private readonly string token;
@@ -28,9 +28,9 @@ public class Wall
 	
 	public async IAsyncEnumerable<Post> Get(int count)
 	{
-		var url = Url + $".get?count={count}&access_token={token}&v={vkApiVersion}";
+		var uri = ApiUri + $".get?count={count}&access_token={token}&v={vkApiVersion}";
 		
-		var httpRequestMsg = new HttpRequestMessage(HttpMethod.Get, url);
+		var httpRequestMsg = new HttpRequestMessage(HttpMethod.Get, uri);
 		var httpResponse = await httpClient.SendAsync(httpRequestMsg);
 
 		if (!httpResponse.IsSuccessStatusCode)
